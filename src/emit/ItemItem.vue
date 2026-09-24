@@ -1,17 +1,22 @@
-    <script setup>
-// Declare that this component can emit an event called "notify"
-const emit = defineEmits(['item'])
+<script setup>
+import { formatQuantity } from '../views/formatQuantity.js'
 
-function item() {
-  // Trigger the event, and send a message along with it
-  emit('item', {
-    name: 'suka',
-    price: 30
-  })
-  
-}
+const props = defineProps({
+  item: Object
+})
+
+const emit = defineEmits(['remove', 'status'])
 </script>
 
 <template>
-  <button @click="item">Click Me</button>
+  <div class="item-card">
+    <h3>{{ props.item.name }}</h3>
+    <p>Quantity: {{ formatQuantity(props.item.quantity) }}</p>
+    <p>Category: {{ props.item.category }}</p>
+    <p>Restock Date: {{ props.item.restockDate }}</p>
+    <p>Status: {{ props.item.status }}</p>
+
+    <button @click="emit('status', props.item.id)">Change Status</button>
+    <button @click="emit('remove', props.item.id)">Delete</button>
+  </div>
 </template>

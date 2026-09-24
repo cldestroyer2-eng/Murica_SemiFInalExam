@@ -1,31 +1,21 @@
 <script setup>
-import { ref } from 'vue'
+import ItemForm from './ItemForm.vue'
+import ItemList from './ItemList.vue'
+import { useInventory } from '../views/useInventory.js'
 
-import itemForm from './ItemForm.vue'
-import itemList from './ItemList.vue'
-import itemItem from './ItemItem.vue'
-
-const message = ref('')
-
-//Emits
-function handleNotify(info) {
-  // Update the message when the event is received
-  message.value = `Name: ${info.itemName},
-  Price: ${info.itemPrice},
-  Description: ${info.itemDescription}`
-}
-
-function handleItem(info) {
-  message.value = `Name: ${info.name}, Price: ${info.price}`
-}
-
+const { items, addItem, removeItem, changeStatus } = useInventory()
 </script>
 
 <template>
   <div>
-    <h1>Main View</h1>
-    <item-item @item="handleItem" />
-    <item-list item-name="Example" :item-price="100" item-description="Demo" @select="handleNotify" />
-    <p>{{ message }}</p>
+    <h1>Inventory</h1>
+
+    <ItemForm @add-item="addItem" />
+
+    <ItemList
+      :items="items"
+      @remove="removeItem"
+      @status="changeStatus"
+    />
   </div>
 </template>

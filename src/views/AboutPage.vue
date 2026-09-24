@@ -1,8 +1,6 @@
-<script setup>
-
-</script>
-
 <template>
-
-    <h1>This is the about page</h1>
+  <div>
+    <h1>About</h1>
+    <p>Simple Inventory Manager is a Vue 3 application for managing school supplies.</p>
+  </div>
 </template>

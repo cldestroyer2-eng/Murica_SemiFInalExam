@@ -1,27 +1,25 @@
 <script setup>
-const props = defineProps({
-  itemName: String,
-  itemPrice: Number,
-  itemDescription: String
+import ItemItem from './ItemItem.vue'
+
+defineProps({
+  items: Array
 })
 
-const emit = defineEmits(['select'])
-
-function handleSelect() {
-  emit('select', {
-    itemName: props.itemName,
-    itemPrice: props.itemPrice,
-    itemDescription: props.itemDescription
-  })
-}
-
+defineEmits(['remove', 'status'])
 </script>
 
 <template>
   <div>
-    <p>Name: {{ props.itemName }}</p>
-    <p>Price: {{ props.itemPrice }}</p>
-    <p>Description: {{ props.itemDescription }}</p>
-    <button @click="handleSelect">Select</button>
+    <h2>Inventory List</h2>
+
+    <p v-if="items.length === 0">No items yet.</p>
+
+    <ItemItem
+      v-for="item in items"
+      :key="item.id"
+      :item="item"
+      @remove="$emit('remove', $event)"
+      @status="$emit('status', $event)"
+    />
   </div>
 </template>
